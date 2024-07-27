@@ -4,7 +4,7 @@ Implementação de integração e um CRUD (create, read, update, delete) entre u
 ## Conceitos e Design Patterns Utilizados
 * Entities
 * Repository
-* Services
+* Adapters
 * Singleton
 
 ### Conexão com Banco de Dados e Singleton
@@ -14,7 +14,7 @@ A conexão com o banco de dados foi abstraída como um serviço, onde ele é uti
     <summary>Implementação</summary>
 
 ```go
-package services
+package adapters
 
 import (
 	"context"
@@ -92,7 +92,7 @@ As operações básicas utilizadas nas aplicações geralmente são simples de i
     <summary>Implementação</summary>
 
 ```go
-package services
+package adapters
 
 import (
 	"context"
@@ -179,7 +179,7 @@ import (
 	"context"
 	"fmt"
 	"go_mongo_db/internal/entities"
-	"go_mongo_db/internal/services"
+	"go_mongo_db/internal/adapters"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -207,7 +207,7 @@ type IReportRepository interface {
 }
 
 func (r *ReportRepository) Create(report entities.Report) error {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	report.Id = primitive.NewObjectID()
@@ -222,7 +222,7 @@ func (r *ReportRepository) Create(report entities.Report) error {
 }
 
 func (r *ReportRepository) Find(params *ReportParams) (*[]entities.Report, error) {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	values := []entities.Report{}
@@ -239,7 +239,7 @@ func (r *ReportRepository) Find(params *ReportParams) (*[]entities.Report, error
 }
 
 func (r *ReportRepository) Update(id primitive.ObjectID, value entities.Report) error {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	filter := bson.D{primitive.E{Key: "_id", Value: id}}
@@ -256,7 +256,7 @@ func (r *ReportRepository) Update(id primitive.ObjectID, value entities.Report) 
 }
 
 func (r *ReportRepository) Delete(id primitive.ObjectID) error {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	filter := bson.D{primitive.E{Key: "_id", Value: id}}
