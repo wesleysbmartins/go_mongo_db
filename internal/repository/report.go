@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 	"fmt"
+	"go_mongo_db/internal/adapters"
 	"go_mongo_db/internal/entities"
-	"go_mongo_db/internal/services"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -29,7 +29,7 @@ type IReportRepository interface {
 }
 
 func (r *ReportRepository) Create(report entities.Report) error {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	report.Id = primitive.NewObjectID()
@@ -44,7 +44,7 @@ func (r *ReportRepository) Create(report entities.Report) error {
 }
 
 func (r *ReportRepository) Find(params *ReportParams) (*[]entities.Report, error) {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	values := []entities.Report{}
@@ -61,7 +61,7 @@ func (r *ReportRepository) Find(params *ReportParams) (*[]entities.Report, error
 }
 
 func (r *ReportRepository) Update(id primitive.ObjectID, value entities.Report) error {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	filter := bson.D{primitive.E{Key: "_id", Value: id}}
@@ -78,7 +78,7 @@ func (r *ReportRepository) Update(id primitive.ObjectID, value entities.Report) 
 }
 
 func (r *ReportRepository) Delete(id primitive.ObjectID) error {
-	database := &services.MongoOperations{}
+	database := &adapters.MongoOperations{}
 	ctx := context.TODO()
 
 	filter := bson.D{primitive.E{Key: "_id", Value: id}}

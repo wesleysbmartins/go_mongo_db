@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
+	"go_mongo_db/internal/adapters"
 	"go_mongo_db/internal/entities"
 	"go_mongo_db/internal/repository"
-	"go_mongo_db/internal/services"
 )
 
 func init() {
-	mongo := services.MongoDb{}
+	mongo := adapters.MongoDb{}
 	mongo.Connect()
 }
 
